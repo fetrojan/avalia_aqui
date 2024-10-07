@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Alert, Switch } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Alert, Switch, ActivityIndicator } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { globalStyles } from '../global/styles';
 import Experience from '../components/Experience';
@@ -11,6 +11,7 @@ export default function FormReview({ navigation, route }: { navigation: Navigati
     const [feedback, setFeedback] = useState('');
     const [recommend, setRecommend] = useState(false);
     const [experience, setExperience] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
     
     const productId = route.params?.productId
 
@@ -19,6 +20,8 @@ export default function FormReview({ navigation, route }: { navigation: Navigati
             Alert.alert('Por favor, preencha todos os campos');
             return;
         }
+
+        setIsLoading(true)
 
         Alert.alert('Feedback enviado com sucesso');
         axios.post('http://192.168.1.150:3000/evaluations', {
@@ -34,6 +37,8 @@ export default function FormReview({ navigation, route }: { navigation: Navigati
         }).catch((error) => {
             Alert.alert('Error', 'Não foi possível enviar o seu feedback')
             console.log(error)
+        }).finally(() => {
+            setIsLoading(false)
         })
     };
 
@@ -85,8 +90,12 @@ export default function FormReview({ navigation, route }: { navigation: Navigati
             </View>
 
             
-            <TouchableOpacity onPress={handleSubmit} style={styles.submitButton}>
-                <Text style={styles.submitButtonText}>Enviar feedback</Text>
+            <TouchableOpacity onPress={handleSubmit} style={styles.submitButton} disabled={isLoading}>
+            {isLoading ? (
+                    <ActivityIndicator size="small" color="#FFF" />
+                ) : (
+                    <Text style={styles.submitButtonText}>Enviar feedback</Text>
+                )}
             </TouchableOpacity>
 
         </SafeAreaView>
