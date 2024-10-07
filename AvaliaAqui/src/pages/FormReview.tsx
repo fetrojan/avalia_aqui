@@ -2,22 +2,39 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Alert, Switch } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { globalStyles } from '../global/styles';
+import Experience from '../components/Experience';
+import axios from 'axios';
 
-export default function FormReview({ navigation }: { navigation: NavigationProp<any> }) {
+export default function FormReview({ navigation, route }: { navigation: NavigationProp<any>, route: any }, ) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [experience, setExperience] = useState('');
+    const [feedback, setFeedback] = useState('');
     const [recommend, setRecommend] = useState(false);
+    const [experience, setExperience] = useState('')
+    
+    const productId = route.params?.productId
 
     const handleSubmit = () => {
-        // Aqui você pode fazer a lógica de envio dos dados
-        if (!name || !email || !experience) {
+        if (!name || !email || !feedback) {
             Alert.alert('Por favor, preencha todos os campos');
             return;
         }
 
         Alert.alert('Feedback enviado com sucesso');
-        // Navegar de volta ou limpar os campos após o envio, dependendo da necessidade
+        axios.post('http://192.168.1.150:3000/evaluations', {
+            productId: productId,
+            name: name,
+            email: email,
+            feedback: feedback,
+            experience: experience,
+            recommend: recommend
+        }).then(() => {
+            Alert.alert('Obrigado', 'Feedback cadastrado com sucesso!')
+            navigation.navigate('Products')
+        }).catch((error) => {
+            Alert.alert('Error', 'Não foi possível enviar o seu feedback')
+            console.log(error)
+        })
     };
 
     return (
@@ -49,11 +66,15 @@ export default function FormReview({ navigation }: { navigation: NavigationProp<
             <TextInput
                 style={[globalStyles.input, styles.textArea]}
                 placeholder="Descreva sua experiência"
-                value={experience}
-                onChangeText={setExperience}
+                value={feedback}
+                onChangeText={setFeedback}
                 multiline={true}
                 numberOfLines={4}
+                returnKeyType='done'
+                blurOnSubmit={true}
             />
+
+            <Experience onExperienceChange={(value) => setExperience(value)}/>
 
             <View style={styles.switchContainer}>
                 <Switch
@@ -111,7 +132,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 15,
-        marginLeft: 15
+        marginLeft: 15,
+        marginTop: 20
     },
     switchText: {
         fontSize: 16

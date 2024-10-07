@@ -35,6 +35,7 @@ export default function Products({ navigation }:{navigation : NavigationProp<any
     })
 
     function navigateToReview(id: number) {
+        console.log("Navigating to FormReview with productId:", id);
         navigation.navigate('FormReview', {productId: id})
     }
 

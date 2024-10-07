@@ -5,6 +5,7 @@ import Login from './src/pages/Login';
 import Products from './src/pages/Products';
 import Reviews from './src/pages/Reviews';
 import FormReview from './src/pages/FormReview';
+import Experience from './src/components/Experience';
 
 const Stack = createNativeStackNavigator()
 
