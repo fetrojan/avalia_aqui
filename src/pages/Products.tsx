@@ -3,6 +3,7 @@ import {View, Text, Alert, FlatList, SafeAreaView, TouchableOpacity, StyleSheet,
 import { useState, useEffect } from 'react'
 import {NavigationProp, useFocusEffect} from '@react-navigation/native'
 import { globalStyles } from "../global/styles"
+import { API_URL } from "@env"
 
 type Product = {
     id: number
@@ -24,7 +25,7 @@ export default function Products({ navigation }:{navigation : NavigationProp<any
     useFocusEffect(() =>{
 
 
-        axios.get( 'http://192.168.1.150:3000/products')
+        axios.get(`${API_URL}/products`)
         .then((response) => {
             setProducts(response.data)
         })

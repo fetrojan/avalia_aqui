@@ -24,7 +24,7 @@ export default function FormReview({ navigation, route }: { navigation: Navigati
         setIsLoading(true)
 
         Alert.alert('Feedback enviado com sucesso');
-        axios.post('http://192.168.1.150:3000/evaluations', {
+        axios.post('http://192.168.1.113:3000/evaluations', {
             productId: productId,
             name: name,
             email: email,
