@@ -21,12 +21,17 @@ Aplicativo mobile desenvolvido com React Native para o projeto **Avalia Aqui**, 
 - React Navigation
 - Expo
 
+## 🔗 Projeto Relacionado
+
+Este projeto depende da API construída no repositório [Avalia Aqui - Backend](https://github.com/fetrojan/avalia_aqui_backend).
+Certifique-se de clonar e iniciar o backend antes de executar este frontend.
+
 ## ⚙️ Como Rodar o Projeto
 
 1. **Clone o repositório:**
 
 ```bash
-git clone https://github.com/seu-usuario/avalia-aqui-frontend.git
+git clone https://github.com/fetrojan/avalia-aqui-frontend.git
 ```
 
 2. **Instale as dependências:**
