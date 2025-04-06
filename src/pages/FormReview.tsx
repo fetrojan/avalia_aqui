@@ -4,6 +4,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { globalStyles } from '../global/styles';
 import Experience from '../components/Experience';
 import axios from 'axios';
+import { API_URL } from "@env"
 
 export default function FormReview({ navigation, route }: { navigation: NavigationProp<any>, route: any }, ) {
     const [name, setName] = useState('');
@@ -13,7 +14,7 @@ export default function FormReview({ navigation, route }: { navigation: Navigati
     const [experience, setExperience] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     
-    const productId = route.params?.productId
+    const product_id = route.params?.product_id
 
     const handleSubmit = () => {
         if (!name || !email || !feedback) {
@@ -23,9 +24,8 @@ export default function FormReview({ navigation, route }: { navigation: Navigati
 
         setIsLoading(true)
 
-        Alert.alert('Feedback enviado com sucesso');
-        axios.post('http://192.168.1.113:3000/evaluations', {
-            productId: productId,
+        axios.post(`${API_URL}/reviews`, {
+            product_id: product_id,
             name: name,
             email: email,
             feedback: feedback,
